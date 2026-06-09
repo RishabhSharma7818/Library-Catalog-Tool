@@ -5,7 +5,7 @@ class LibrarySystem {
     private ArrayList<String> history = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
     private ArrayList<Book> issueBooks = new ArrayList<>();
-    private Scanner sc = new Scanner(System.in);
+    protected static Scanner sc = new Scanner(System.in);
 
     public int validIntInput(){
         while(true){
@@ -113,7 +113,7 @@ class LibrarySystem {
         }
     }
 
-    public void UpdateBooks(){
+    public void UpdateBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
         
