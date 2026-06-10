@@ -5,7 +5,7 @@ class LibrarySystem {
     private ArrayList<String> history = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
     private ArrayList<Book> issueBooks = new ArrayList<>();
-    protected static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public int validIntInput(){
         while(true){
@@ -50,7 +50,12 @@ class LibrarySystem {
     public void addBook(){
         System.out.println("Please Enter Book ID : ");
         int id = validIntInput();
-        
+
+        if(findBook(id)!=null){
+            System.out.println("Account already exists!");
+            return;
+        }
+
         System.out.println("Please Enter Book Name : ");
         String title = validStringInput();
 
@@ -67,11 +72,11 @@ class LibrarySystem {
     public void deleteBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
+        Book book = findBook(id);
 
-        if(findBook(id)==null){
+        if(book==null){
             System.out.println("Book not found!");
         }else{
-            Book book = findBook(id);
             books.remove(book);
             System.out.println("Book Deleted Successfully!");
             history.add("\""+ book.getTitle() + "\"" + " Deleted from Library!");
@@ -81,11 +86,11 @@ class LibrarySystem {
     public void issueBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
+        Book book = findBook(id);
 
-        if(findBook(id)==null){
+        if(book==null){
             System.out.println("Book not found!");
         }else{
-            Book book = findBook(id);
             books.remove(book);
             issueBooks.add(book);
             System.out.println("Book Issued Successfully!");
@@ -115,35 +120,37 @@ class LibrarySystem {
         }
     }
 
-    public void UpdateBook(){
+    public void updateBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
-        if(findBook(id) == null){
+        Book book = findBook(id);
+
+        if(book == null){
             System.out.println("Book not found!");
         }else{
-            Book book = findBook(id);
-
             System.out.println("Please enter new Title : ");
             String title = validStringInput();
 
             System.out.println("Please update Author Name : ");
             String author = validStringInput();
 
+            String oldTitle = book.getTitle();
             book.setTitle(title);
+            String oldAuthor = book.getAuthor();
             book.setAuthor(author);
             System.out.println("Book details Updated!");
-            history.add("\""+ book.getTitle() + "\"" + " Updated in Library!");
+            history.add("\""+ oldTitle + "&" + oldAuthor + "\" updated to \"" + title + "&" + author);
         }
     }
 
     public void returnBook(){
         System.out.println("Please enter Book ID to Return : ");
         int id = validIntInput();
+        Book book = findBookInIssuedBook(id);
 
-        if(findBookInIssuedBook(id) == null){
+        if(book == null){
             System.out.println("Book not found!");
         }else{
-            Book book = findBookInIssuedBook(id);
             issueBooks.remove(book);
             books.add(book);
             System.out.println("Books Returned Successfully!");
@@ -154,7 +161,7 @@ class LibrarySystem {
     public void showHistory(){
         System.out.println("Library History : ");
         if(history.isEmpty()){
-            System.out.println("Nothing is happened to store in history!");
+            System.out.println("No actions have been recorded yet.");
         }else{
             for(String history : history){
             System.out.println(history);
