@@ -10,8 +10,10 @@ public class Main extends LibrarySystem{
             System.out.println("5. Show Available Books");
             System.out.println("6. Show Issued Books");
             System.out.println("7. Return Book");
-            System.out.println("8. Exit");
+            System.out.println("8. Show History");
+            System.out.println("9. Exit");
 
+            System.out.println("Please enter your choice : ");
             int choice;
             try{
                 choice = Integer.parseInt(sc.nextLine());
@@ -29,7 +31,8 @@ public class Main extends LibrarySystem{
                 case 5 -> library.showAvailableBooks();
                 case 6 -> library.showIssuedBooks();
                 case 7 -> library.returnBook();
-                case 8 -> {
+                case 8 -> library.showHistory();
+                case 9 -> {
                     System.out.println("Exiting...");
                     sc.close();
                     return;
