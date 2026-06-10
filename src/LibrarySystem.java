@@ -67,68 +67,73 @@ class LibrarySystem {
     public void deleteBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
-        Book book = findBook(id);
 
         if(findBook(id)==null){
             System.out.println("Book not found!");
+        }else{
+            Book book = findBook(id);
+            books.remove(book);
+            System.out.println("Book Deleted Successfully!");
+            history.add("\""+ book.getTitle() + "\"" + " Deleted from Library!");
         }
-
-        books.remove(book);
-        System.out.println("Book Deleted Successfully!");
-        history.add("\""+ book.getTitle() + "\"" + " Deleted from Library!");
     }
 
     public void issueBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
-        Book book = findBook(id);
 
         if(findBook(id)==null){
             System.out.println("Book not found!");
+        }else{
+            Book book = findBook(id);
+            books.remove(book);
+            issueBooks.add(book);
+            System.out.println("Book Issued Successfully!");
+            history.add("\""+ book.getTitle() + "\"" + " Issued from Available Books!");
         }
-
-        books.remove(book);
-        issueBooks.add(book);
-        System.out.println("Book Issued Successfully!");
-        history.add("\""+ book.getTitle() + "\"" + " Issued from Available Books!");
     }
 
     public void showAvailableBooks(){
         if(books.isEmpty()){
             System.out.println("Books not found!");
-        }
-        System.out.println("All Available Books : ");
-        for(Book book : books){
-            System.out.println(book);
+        }else{
+            System.out.println("All Available Books : ");
+            for(Book book : books){
+                System.out.println(book);
+            }
         }
     }
 
     public void showIssuedBooks(){
         if(issueBooks.isEmpty()){
             System.out.println("Books not found!");
-        }
-        System.out.println("All Issued Books : ");
-        for(Book book : issueBooks){
-            System.out.println(book);
+        }else{
+            System.out.println("All Issued Books : ");
+            for(Book book : issueBooks){
+                System.out.println(book);
+            }
         }
     }
 
     public void UpdateBook(){
         System.out.println("Please enter Book ID : ");
         int id = validIntInput();
-        
-        Book book = findBook(id);
+        if(findBook(id) == null){
+            System.out.println("Book not found!");
+        }else{
+            Book book = findBook(id);
 
-        System.out.println("Please enter new Title : ");
-        String title = validStringInput();
+            System.out.println("Please enter new Title : ");
+            String title = validStringInput();
 
-        System.out.println("Please update Author Name : ");
-        String author = validStringInput();
+            System.out.println("Please update Author Name : ");
+            String author = validStringInput();
 
-        book.setTitle(title);
-        book.setAuthor(author);
-        System.out.println("Book details Updated!");
-        history.add("\""+ book.getTitle() + "\"" + " Updated in Library!");
+            book.setTitle(title);
+            book.setAuthor(author);
+            System.out.println("Book details Updated!");
+            history.add("\""+ book.getTitle() + "\"" + " Updated in Library!");
+        }
     }
 
     public void returnBook(){
@@ -137,14 +142,24 @@ class LibrarySystem {
 
         if(findBookInIssuedBook(id) == null){
             System.out.println("Book not found!");
+        }else{
+            Book book = findBookInIssuedBook(id);
+            issueBooks.remove(book);
+            books.add(book);
+            System.out.println("Books Returned Successfully!");
+            history.add("\"" + book.getTitle() + "\"" + " Returned to Library!");
         }
-        
-        Book book = findBookInIssuedBook(id);
+    }
 
-        issueBooks.remove(book);
-        books.add(book);
-        System.out.println("Books Returned Successfully!");
-        history.add("\"" + book.getTitle() + "\"" + " Returned to Library!");
+    public void showHistory(){
+        System.out.println("Library History : ");
+        if(history.isEmpty()){
+            System.out.println("Nothing is happened to store in history!");
+        }else{
+            for(String history : history){
+            System.out.println(history);
+            }
+        }
     }
 
 }
